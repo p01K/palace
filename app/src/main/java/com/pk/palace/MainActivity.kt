@@ -48,7 +48,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.pk.palace.repo.NoteRepository
+import com.pk.palace.repo.FirebaseNoteRepository
 import com.pk.palace.repo.NoteViewModelFactory
 import com.pk.palace.ui.NoteViewModel
 import com.pk.palace.ui.QuoteDetailScreen
@@ -59,6 +59,7 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+//        FirebaseFirestore.setLoggingEnabled(true)
         setContent {
             AppNavigation()
         }
@@ -70,8 +71,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val viewModel: NoteViewModel = viewModel(
         factory = NoteViewModelFactory(
-            repository = NoteRepository(
-            )
+            repository = FirebaseNoteRepository()
         )
     )
     NavHost(

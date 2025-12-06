@@ -20,7 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @Composable
 fun QuoteDetailScreen(noteId: String, viewModel: NoteViewModel = viewModel()) {
 
-    val note = viewModel.getNoteById(noteId.toInt()).collectAsState(initial = null).value
+    val note = viewModel.getNoteByIdStateFlow(noteId.toInt()).collectAsState().value
 
     if (note == null) {
         Box(
