@@ -2,7 +2,7 @@ package com.pk.palace.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pk.palace.model.Note
+import com.pk.palace.model.Bite
 import com.pk.palace.repo.NoteRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,10 +15,10 @@ class NoteViewModel(
     private val repository: NoteRepository
 ) : ViewModel() {
 
-    private val _notes = MutableStateFlow<List<Note>>(emptyList())
+    private val _notes = MutableStateFlow<List<Bite>>(emptyList())
     val notes = _notes.asStateFlow()
 
-    private val noteFlows = mutableMapOf<Int, StateFlow<Note?>>()
+    private val noteFlows = mutableMapOf<Int, StateFlow<Bite?>>()
 
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()
@@ -27,9 +27,9 @@ class NoteViewModel(
         loadNotes()
     }
 
-    fun getNoteByIdStateFlow(id: Int): StateFlow<Note?> {
+    fun getNoteByIdStateFlow(id: Int): StateFlow<Bite?> {
         return noteFlows.getOrPut(id) {
-            repository.getNoteById(id)
+            repository.getBite(id)
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5000),
@@ -41,7 +41,7 @@ class NoteViewModel(
     fun loadNotes() {
         viewModelScope.launch {
             _loading.value = true
-            _notes.value = repository.getNotes()
+            _notes.value = repository.getBites()
             _loading.value = false
         }
     }

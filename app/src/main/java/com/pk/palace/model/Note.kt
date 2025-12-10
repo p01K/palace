@@ -10,13 +10,7 @@ enum class NoteCategory {
 
 enum class ContentType{
     QUOTE,
-    VIDEO
+    VIDEO,
+    IMAGE
 }
 
-data class Note(
-    val id: Int = 0,
-    val title: String = "",
-    val description: String = "",
-    val type: ContentType = ContentType.QUOTE,
-    val category: NoteCategory = NoteCategory.APHORISM
-)
