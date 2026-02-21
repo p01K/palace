@@ -8,9 +8,4 @@ enum class NoteCategory {
     NOTE
 }
 
-enum class ContentType{
-    QUOTE,
-    IMAGE,
-    GIF
-}
 

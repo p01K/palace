@@ -2,16 +2,16 @@ package com.pk.palace.repo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.pk.palace.ui.NoteViewModel
+import com.pk.palace.ui.ExerciseViewModel
 
-class NoteViewModelFactory(
-    private val repository: NoteRepository
+class ExerciseViewModelFactory(
+    private val repository: ExerciseRepository
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            return NoteViewModel(repository) as T
+        if (modelClass.isAssignableFrom(ExerciseViewModel::class.java)) {
+            return ExerciseViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

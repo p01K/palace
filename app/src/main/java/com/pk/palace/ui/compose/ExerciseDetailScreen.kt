@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,14 +25,14 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.pk.palace.model.Gif
 import com.pk.palace.model.Image
-import com.pk.palace.model.Note
+import com.pk.palace.model.Text
+import com.pk.palace.ui.ExerciseViewModel
 import com.pk.palace.ui.ImageLoaderProvider
-import com.pk.palace.ui.NoteViewModel
 
 @Composable
-fun QuoteDetailScreen(noteId: String, viewModel: NoteViewModel = viewModel()) {
+fun ExerciseDetailScreen(exerciseId: String, viewModel: ExerciseViewModel = viewModel()) {
 
-    val bite = viewModel.getNoteByIdStateFlow(noteId.toInt()).collectAsState().value
+    val bite = viewModel.getNoteByIdStateFlow(exerciseId.toInt()).collectAsState().value
 
     if (bite == null) {
         Box(
@@ -43,11 +44,11 @@ fun QuoteDetailScreen(noteId: String, viewModel: NoteViewModel = viewModel()) {
         return
     }
 
-    Log.i("QuoteDetailScreen", "Bite: ${bite.contentType()}")
-    when(bite){
-        is Note -> NoteScreenComposable(bite)
-        is Image -> ImageScreenComposable(bite)
-        is Gif -> GifScreenComposable(bite)
+    Log.i("QuoteDetailScreen", "Bite: ${bite.javaClass.simpleName}")
+    when(bite.content){
+        is Text -> ExerciseScreenComposable(bite.content)
+        is Image -> ImageScreenComposable(bite.content)
+        is Gif -> GifScreenComposable(bite.content)
     }
 }
 
@@ -127,7 +128,7 @@ fun ImageScreenComposable(image: Image){
 }
 
 @Composable
-fun NoteScreenComposable(note: Note){
+fun ExerciseScreenComposable(note: Text){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -136,19 +137,27 @@ fun NoteScreenComposable(note: Note){
 
         Text(
             text = note.title,
-            fontSize = 28.sp,
+            style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
+            text = "Instructions",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
             text = note.description,
-            fontSize = 18.sp
+            style = MaterialTheme.typography.bodyLarge
         )
 
-        Spacer(modifier = Modifier.height(36.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
-        // Add more fields: video, image, createdAt, tags, etc.
+        Text(
+            text = "Sets: 3, Reps: 12",
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }

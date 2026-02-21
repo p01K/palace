@@ -4,44 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.pk.palace.repo.FirebaseNoteRepository
-import com.pk.palace.repo.NoteViewModelFactory
-import com.pk.palace.ui.NoteViewModel
-import com.pk.palace.ui.compose.QuoteDetailScreen
-import com.pk.palace.ui.compose.NoteItem
+import com.pk.palace.repo.ExerciseViewModelFactory
+import com.pk.palace.repo.FirebaseExerciseRepository
+import com.pk.palace.ui.ExerciseViewModel
+import com.pk.palace.ui.compose.ExerciseDetailScreen
+import com.pk.palace.ui.compose.ExerciseListScreen
+import com.pk.palace.ui.theme.PalaceTheme
 
 
 class MainActivity : ComponentActivity() {
@@ -49,9 +24,10 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-//        FirebaseFirestore.setLoggingEnabled(true)
         setContent {
-            AppNavigation()
+            PalaceTheme {
+                AppNavigation()
+            }
         }
     }
 }
@@ -59,103 +35,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
-    val viewModel: NoteViewModel = viewModel(
-        factory = NoteViewModelFactory(
-            repository = FirebaseNoteRepository()
+    val viewModel: ExerciseViewModel = viewModel(
+        factory = ExerciseViewModelFactory(
+            repository = FirebaseExerciseRepository()
         )
     )
     NavHost(
         navController = navController,
-        startDestination = "note_list"
+        startDestination = "exercise_list"
     ) {
-        composable("note_list") {
-            NoteListRoute(
+        composable("exercise_list") {
+            ExerciseListScreen(
                 viewModel,
-                onItemSelected = { noteId ->
-                    navController.navigate("note_detail/$noteId")
+                onItemSelected = { exerciseId ->
+                    navController.navigate("exercise_detail/$exerciseId")
                 }
             )
         }
 
         composable(
-            route = "note_detail/{noteId}",
-            arguments = listOf(navArgument("noteId") { type = NavType.StringType })
+            route = "exercise_detail/{exerciseId}",
+            arguments = listOf(navArgument("exerciseId") { type = NavType.StringType })
         ) { backStackEntry ->
-            val noteId = backStackEntry.arguments?.getString("noteId")!!
-            QuoteDetailScreen(noteId = noteId, viewModel)
-        }
-    }
-}
-@Composable
-fun NoteListRoute(viewModel: NoteViewModel, onItemSelected: (String) -> Unit) {
-    NoteListScreen(viewModel, onItemSelected)
-}
-
-@Composable
-fun NoteListScreen(
-    viewModel: NoteViewModel = viewModel(),
-    onItemSelected: (String) -> Unit = {},
-    onAddNoteClick: () -> Unit = {}
-) {
-    Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onAddNoteClick,
-                containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                shape = CircleShape
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "Add Note",
-                    modifier = Modifier.size(28.dp)
-                )
-            }
-        }
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(Color.Black)
-        ) {
-            NoteItemScreen(viewModel, onItemSelected)
-        }
-
-    }
-}
-
-@Composable
-fun NoteItemScreen(
-    viewModel: NoteViewModel = viewModel(),
-    onItemSelected: (String) -> Unit = {}
-) {
-
-    val notes by viewModel.notes.collectAsState()
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Quotes",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(notes.size) { index ->
-                val bite = notes[index]
-                NoteItem(text = bite.title, onClick = { onItemSelected(bite.id.toString()) })
-            }
+            val exerciseId = backStackEntry.arguments?.getString("exerciseId")!!
+            ExerciseDetailScreen(exerciseId = exerciseId, viewModel)
         }
     }
 }
