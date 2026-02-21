@@ -22,8 +22,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.pk.palace.model.Gif
 import com.pk.palace.model.Image
 import com.pk.palace.model.Note
+import com.pk.palace.ui.ImageLoaderProvider
 import com.pk.palace.ui.NoteViewModel
 
 @Composable
@@ -41,9 +43,51 @@ fun QuoteDetailScreen(noteId: String, viewModel: NoteViewModel = viewModel()) {
         return
     }
 
+    Log.i("QuoteDetailScreen", "Bite: ${bite.contentType()}")
     when(bite){
         is Note -> NoteScreenComposable(bite)
         is Image -> ImageScreenComposable(bite)
+        is Gif -> GifScreenComposable(bite)
+    }
+}
+
+@Composable
+fun GifScreenComposable(gif: Gif) {
+    val context = LocalContext.current
+    val imageLoader = ImageLoaderProvider.get(context)
+
+    Log.i("GifScreen", "Gif: $gif")
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp)
+    ) {
+
+        Text(
+            text = gif.title,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = gif.description,
+            fontSize = 18.sp
+        )
+
+        Spacer(modifier = Modifier.height(36.dp))
+        Log.i("GifScreen", "Fetch gif with url ${gif.url}")
+        AsyncImage(
+            model = ImageRequest.Builder(context)
+                .data(gif.url)
+                .crossfade(true)
+                .build(),
+            imageLoader = imageLoader,
+            contentDescription = null,
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.Fit
+        )
     }
 }
 

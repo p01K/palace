@@ -26,6 +26,15 @@ data class Image(
     override val category: NoteCategory,
     val url: String
 ): Bite {
-    override fun contentType() = ContentType.QUOTE
+    override fun contentType() = ContentType.IMAGE
 }
 
+data class Gif(
+    override val id: Int,
+    override val title: String,
+    override val description: String,
+    override val category: NoteCategory,
+    val url: String
+): Bite {
+    override fun contentType() = ContentType.GIF
+}

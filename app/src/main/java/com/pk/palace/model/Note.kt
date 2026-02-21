@@ -10,7 +10,7 @@ enum class NoteCategory {
 
 enum class ContentType{
     QUOTE,
-    VIDEO,
-    IMAGE
+    IMAGE,
+    GIF
 }
 
