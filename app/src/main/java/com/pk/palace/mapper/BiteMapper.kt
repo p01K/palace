@@ -14,6 +14,7 @@ fun ExerciseDTO.toDomain(): Exercise {
         this.title,
         this.description,
         this.category,
+        this.categories,
         this.targetGroups,
         contentOf(this)
     )

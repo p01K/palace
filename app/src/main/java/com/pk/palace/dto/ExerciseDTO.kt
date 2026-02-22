@@ -1,6 +1,7 @@
 package com.pk.palace.dto
 
 import com.pk.palace.model.ContentType
+import com.pk.palace.model.ExerciseCategory
 import com.pk.palace.model.NoteCategory
 import com.pk.palace.model.TargetGroup
 
@@ -10,6 +11,7 @@ data class ExerciseDTO(
     val description: String = "",
     val type: ContentType = ContentType.TEXT,
     val category: NoteCategory = NoteCategory.APHORISM,
+    val categories: List<ExerciseCategory> = emptyList(),
     var targetGroups: List<TargetGroup> = emptyList(),
     val url: String = ""
 )

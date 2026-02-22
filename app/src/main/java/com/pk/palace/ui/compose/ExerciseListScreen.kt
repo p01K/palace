@@ -84,8 +84,9 @@ fun ExerciseList(
         ) {
             items(notes.size) { index ->
                 val bite = notes[index]
-                ExerciseItem(
+                ExerciseListItem(
                     text = bite.title,
+                    categories = bite.categories,
                     targetGroups = bite.targetGroups,
                     onClick = { onItemSelected(bite.id.toString()) }
                 )
