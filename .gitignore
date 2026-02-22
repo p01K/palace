@@ -7,3 +7,4 @@ errors-*
 .gradle/9.2.1/fileChanges
 .gradle/9.2.1/fileHashes
 .gradle/8.14.3/checksums
+app/src/main/res/mipmap-*
