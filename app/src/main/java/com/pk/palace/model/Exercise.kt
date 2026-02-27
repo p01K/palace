@@ -1,11 +1,12 @@
 package com.pk.palace.model
 
+@JvmInline
+value class ExerciseId(val value: Int)
 
 data class Exercise (
-    val id: Int,
+    val id: ExerciseId,
     val title: String,
     val description: String,
-    val category: NoteCategory,
     val categories: List<ExerciseCategory>,
     val targetGroups: List<TargetGroup>,
     val content: Content

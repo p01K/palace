@@ -1,4 +1,4 @@
-package com.pk.palace.ui
+package com.pk.palace.ui.util
 
 import android.content.Context
 import coil.ImageLoader

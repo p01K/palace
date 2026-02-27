@@ -4,16 +4,16 @@ import com.pk.palace.dto.ExerciseDTO
 import com.pk.palace.model.Content
 import com.pk.palace.model.ContentType
 import com.pk.palace.model.Exercise
+import com.pk.palace.model.ExerciseId
 import com.pk.palace.model.Gif
 import com.pk.palace.model.Image
 import com.pk.palace.model.Text
 
 fun ExerciseDTO.toDomain(): Exercise {
     return Exercise(
-        this.id,
+        ExerciseId(this.id),
         this.title,
         this.description,
-        this.category,
         this.categories,
         this.targetGroups,
         contentOf(this)

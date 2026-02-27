@@ -5,5 +5,10 @@ enum class TargetGroup {
     TRICEPS,
     QUADS,
     HAMSTRINGS,
-    GLUTES
+    GLUTES,
+    HIPS,
+    CHEST,
+    BACK,
+    TRAPS,
+    SHOULDERS
 }

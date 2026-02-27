@@ -27,7 +27,12 @@ import com.pk.palace.model.TargetGroup
 
 
 @Composable
-fun ExerciseListItem(text: String, categories: List<ExerciseCategory>, targetGroups: List<TargetGroup>, onClick: () -> Unit) {
+fun ExerciseListItem(
+    text: String,
+    categories: List<ExerciseCategory>,
+    targetGroups: List<TargetGroup>,
+    onClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,8 +58,8 @@ fun ExerciseListItem(text: String, categories: List<ExerciseCategory>, targetGro
                     )
                 } else {
                     categories.forEach { category ->
-                        Icon(
-                            imageVector = category.toIcon(),
+                        Image(
+                            painter = painterResource(id = category.toDrawable()),
                             contentDescription = "Exercise Category Icon",
                             modifier = Modifier.size(24.dp)
                         )
@@ -73,7 +78,7 @@ fun ExerciseListItem(text: String, categories: List<ExerciseCategory>, targetGro
                     Image(
                         painter = painterResource(id = it.toDrawable()),
                         contentDescription = "Target Group Icon",
-                        modifier = Modifier.size(32.dp)
+                        modifier = Modifier.size(64.dp)
                     )
                 }
             }

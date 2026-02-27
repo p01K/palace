@@ -46,8 +46,8 @@ import coil.request.ImageRequest
 import com.pk.palace.model.Gif
 import com.pk.palace.model.Image
 import com.pk.palace.model.Text
-import com.pk.palace.ui.ExerciseViewModel
-import com.pk.palace.ui.ImageLoaderProvider
+import com.pk.palace.ui.util.ImageLoaderProvider
+import com.pk.palace.ui.viewmodel.ExerciseViewModel
 import kotlinx.coroutines.delay
 
 @Composable
@@ -91,14 +91,21 @@ fun ExerciseDetailScreen(exerciseId: String, viewModel: ExerciseViewModel = view
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
+                exercise.categories.forEach { category ->
+                    Image(
+                        painter = painterResource(id = category.toDrawable()),
+                        contentDescription = category.name,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
                 exercise.targetGroups.forEach { targetGroup ->
                     Image(
                         painter = painterResource(id = targetGroup.toDrawable()),
                         contentDescription = targetGroup.name,
                         modifier = Modifier
-                            .size(64.dp)
+                            .size(48.dp)
                             .clip(CircleShape)
                     )
                 }

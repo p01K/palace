@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
-class FirebaseExerciseRepository(
+class ExerciseRepositoryFirebase(
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 ) : ExerciseRepository {
 
@@ -36,9 +36,5 @@ class FirebaseExerciseRepository(
 
         // Clean up when flow is closed
         awaitClose { listener.remove() }
-    }
-
-    fun addNote(note: ExerciseDTO) {
-        db.collection("notes").add(note)
     }
 }

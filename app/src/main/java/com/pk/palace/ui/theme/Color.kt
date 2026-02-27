@@ -20,3 +20,9 @@ val FitnessDarkBlue = Color(0xFF003B46)
 val FitnessDarkGreen = Color(0xFF07575B)
 val FitnessDarkCream = Color(0xFF66A5AD)
 val FitnessDarkLightCream = Color(0xFFC4DFE6)
+
+// Lighter Theme
+val LightBlue = Color(0xFFE0F7FA)
+val LightGreen = Color(0xFFE8F5E9)
+val LightBackground = Color(0xFFFFFFFF)
+val LightSurface = Color(0xFFF5F5F5)
